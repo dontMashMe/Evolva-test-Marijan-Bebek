@@ -30,9 +30,9 @@ public class CSVHandlerTest {
     public void testLoadCsv() {
         List<List<String>> result = csvHandler.loadCsv(PathConstants.SampleCSVFile.label);
         List<List<String>> expected = Arrays.asList(
-                Arrays.asList("Zagreb", " EUR", " 1"),
-                Arrays.asList("Osijek", " EUR", " 2"),
-                Arrays.asList("Rijeka", " EUR", " 4")
+                Arrays.asList("Zagreb", "EUR", "1"),
+                Arrays.asList("Osijek", "EUR", "2"),
+                Arrays.asList("Rijeka", "EUR", "4")
         );
 
         assertEquals(expected, result, "The CSV data should match the expected data");
