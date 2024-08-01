@@ -1,4 +1,4 @@
-package com.example.evolvatestmarijanbebek;
+package com.example.evolvatestmarijanbebek.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
