@@ -1,5 +1,7 @@
 package com.example.evolvatestmarijanbebek.services;
 
+import com.example.evolvatestmarijanbebek.utils.PathConstants;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -15,7 +17,7 @@ public class DatabaseConnection {
 
     static {
         try (InputStream input = Files.newInputStream(
-                Paths.get("src/main/resources/com/example/evolvatestmarijanbebek/db.properties")
+                Paths.get(PathConstants.DBProperties.label)
         )) {
             properties.load(input);
         } catch (IOException e) {
