@@ -1,4 +1,4 @@
-import com.example.evolvatestmarijanbebek.services.DatabaseConnection;
+import com.example.evolvatestmarijanbebek.services.DatabaseConnectionProvider;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -9,13 +9,13 @@ import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class DatabaseConnectionTest {
+public class DatabaseConnectionProviderTest {
     private static Connection connection;
 
     @BeforeAll
     public static void setup() {
         try {
-            connection = DatabaseConnection.getConnection();
+            connection = DatabaseConnectionProvider.getConnection();
         } catch (SQLException e) {
             fail("Filed to establish a connection " + e.getMessage());
         }

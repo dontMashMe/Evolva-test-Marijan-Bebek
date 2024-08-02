@@ -11,7 +11,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class DatabaseConnection {
+public class DatabaseConnectionProvider {
 
     private static final Properties properties = new Properties();
 
