@@ -3,7 +3,7 @@ package com.example.evolvatestmarijanbebek.utils;
 public enum PathConstants {
     /*Application paths*/
     DBProperties("src/main/resources/com/example/evolvatestmarijanbebek/db.properties"),
-    UploadDir("/uploads"),
+    UploadDir("uploads"),
 
 
     /*Test paths*/

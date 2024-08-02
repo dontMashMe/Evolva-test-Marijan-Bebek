@@ -1,19 +1,19 @@
 -- Create Currency table
 CREATE TABLE Currency (
     ID SERIAL PRIMARY KEY,
-    CurrencyName CHAR(50) NOT NULL
+    CurrencyName VARCHAR NOT NULL
 );
 
 -- Create Country table
 CREATE TABLE Country (
     ID SERIAL PRIMARY KEY,
-    CountryName CHAR(50) NOT NULL
+    CountryName VARCHAR NOT NULL
 );
 
 -- Create City table
 CREATE TABLE City (
     ID SERIAL PRIMARY KEY,
-    CityName CHAR(50) NOT NULL,
+    CityName VARCHAR NOT NULL,
     CountryID INT NOT NULL,
     CONSTRAINT fk_country FOREIGN KEY (CountryID) REFERENCES Country(ID)
 );

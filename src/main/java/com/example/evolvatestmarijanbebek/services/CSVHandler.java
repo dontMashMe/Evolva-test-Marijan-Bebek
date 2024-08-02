@@ -48,8 +48,10 @@ public class CSVHandler {
      * @throws NullPointerException if the directory path is null or the directory does not exist
      */
     public Set<String> getAllFilesInUploadDir() {
-        return Stream.of(Objects.requireNonNull(new File(this.path).listFiles()))
-                .map(File::getName)
-                .collect(Collectors.toSet());
+        File[] files = new File(this.path).listFiles();
+        return files == null ? Collections.emptySet() :
+                Stream.of(files)
+                        .map(File::getName)
+                        .collect(Collectors.toSet());
     }
 }

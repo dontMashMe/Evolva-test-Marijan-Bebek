@@ -4,6 +4,7 @@ target/
 !**/src/test/**/target/
 
 /src/main/resources/com/example/evolvatestmarijanbebek/db.properties
+/uploads
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
