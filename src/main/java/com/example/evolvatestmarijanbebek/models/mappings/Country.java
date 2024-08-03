@@ -1,4 +1,4 @@
-package com.example.evolvatestmarijanbebek.models;
+package com.example.evolvatestmarijanbebek.models.mappings;
 
 public class Country {
     private Long id;

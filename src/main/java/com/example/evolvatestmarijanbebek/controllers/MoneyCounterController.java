@@ -30,9 +30,9 @@ public class MoneyCounterController {
      * */
     private void startLoadingAnimation() {
         Timeline timeline = new Timeline(
-                new KeyFrame(Duration.seconds(0.5), _ -> statusText.setText("Searching for money files in upload directory.")),
-                new KeyFrame(Duration.seconds(1.0), _ -> statusText.setText("Searching for money files in upload directory..")),
-                new KeyFrame(Duration.seconds(1.5), _ -> statusText.setText("Searching for money files in upload directory..."))
+                new KeyFrame(Duration.seconds(0.5), _ -> statusText.setText("Searching for trip files in upload directory.")),
+                new KeyFrame(Duration.seconds(1.0), _ -> statusText.setText("Searching for trip files in upload directory..")),
+                new KeyFrame(Duration.seconds(1.5), _ -> statusText.setText("Searching for trip files in upload directory..."))
         );
 
         timeline.setCycleCount(2);

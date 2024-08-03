@@ -1,4 +1,4 @@
-package com.example.evolvatestmarijanbebek.models;
+package com.example.evolvatestmarijanbebek.models.mappings;
 
 import java.util.Objects;
 

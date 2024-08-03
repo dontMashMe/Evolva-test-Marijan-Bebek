@@ -7,10 +7,13 @@ module com.example.evolvatestmarijanbebek {
     requires com.opencsv;
 
     opens com.example.evolvatestmarijanbebek to javafx.fxml;
+
     exports com.example.evolvatestmarijanbebek;
     exports com.example.evolvatestmarijanbebek.controllers;
     exports com.example.evolvatestmarijanbebek.services;
     exports com.example.evolvatestmarijanbebek.utils;
-    exports com.example.evolvatestmarijanbebek.models;
+    exports com.example.evolvatestmarijanbebek.models.mappings;
+    exports com.example.evolvatestmarijanbebek.models.DAO;
+
     opens com.example.evolvatestmarijanbebek.controllers to javafx.fxml;
 }

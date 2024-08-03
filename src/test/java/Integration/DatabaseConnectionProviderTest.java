@@ -1,3 +1,5 @@
+package Integration;
+
 import com.example.evolvatestmarijanbebek.services.DatabaseConnectionProvider;
 
 import org.junit.jupiter.api.AfterAll;
