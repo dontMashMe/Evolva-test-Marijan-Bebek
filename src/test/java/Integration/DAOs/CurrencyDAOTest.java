@@ -18,7 +18,7 @@ public class CurrencyDAOTest extends BaseDAOTest {
 
     @Test
     @Order(1)
-    public void testGetAllCurrencies() throws SQLException {
+    public void testGetAll() throws SQLException {
         List<Currency> currencyList = currencyDao.getAll();
 
         List<Currency> expected = Arrays.asList(
@@ -32,7 +32,7 @@ public class CurrencyDAOTest extends BaseDAOTest {
 
     @Test
     @Order(2)
-    public void testGetSpecificCurrency() throws SQLException {
+    public void testGet() throws SQLException {
         Currency expectedCurrency = new Currency(1L, "USD");
         Optional<Currency> queriedCurrency = currencyDao.get(expectedCurrency.getId());
 

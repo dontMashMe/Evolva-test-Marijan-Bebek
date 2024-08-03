@@ -82,4 +82,9 @@ public abstract class BaseDAOTest {
         closeConnection();
     }
 
+    protected abstract void testGet() throws SQLException;
+
+    protected abstract void testGetAll() throws SQLException;
+
+    protected abstract void testInsert() throws SQLException;
 }

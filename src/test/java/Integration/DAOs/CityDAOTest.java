@@ -17,7 +17,7 @@ public class CityDAOTest extends BaseDAOTest {
 
     @Test
     @Order(1)
-    public void testGetAllCities() throws SQLException {
+    public void testGetAll() throws SQLException {
         List<City> cityList = cityDao.getAll();
 
         List<City> expected = Arrays.asList(
@@ -31,7 +31,7 @@ public class CityDAOTest extends BaseDAOTest {
 
     @Test
     @Order(2)
-    public void testGetSpecificCity() throws SQLException {
+    public void testGet() throws SQLException {
         City expectedCity = new City(1L, "New York", "United States");
         Optional<City> queriedCity = cityDao.get(expectedCity.getId());
 

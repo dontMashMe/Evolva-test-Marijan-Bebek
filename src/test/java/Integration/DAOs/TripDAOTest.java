@@ -17,7 +17,7 @@ public class TripDAOTest extends BaseDAOTest {
 
     @Test
     @Order(1)
-    public void testGetAllTrips() throws SQLException {
+    public void testGetAll() throws SQLException {
         List<Trip> tripList = tripDao.getAll();
 
         List<Trip> expected = Arrays.asList(
@@ -31,7 +31,7 @@ public class TripDAOTest extends BaseDAOTest {
 
     @Test
     @Order(2)
-    public void testGetSpecificTrip() throws SQLException {
+    public void testGet() throws SQLException {
         Trip expectedTrip = new Trip(1L, "USD", "New York", 1000);
         Optional<Trip> queriedTrip = tripDao.get(expectedTrip.getId());
 

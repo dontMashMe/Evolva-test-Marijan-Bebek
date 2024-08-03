@@ -18,7 +18,7 @@ public class CountryDAOTest extends BaseDAOTest {
 
     @Test
     @Order(1)
-    public void testGetAllCountries() throws SQLException {
+    public void testGetAll() throws SQLException {
         List<Country> countryList = countryDao.getAll();
         List<Country> expected = Arrays.asList(
                 new Country(1L, "United States"),
@@ -31,7 +31,7 @@ public class CountryDAOTest extends BaseDAOTest {
 
     @Test
     @Order(2)
-    public void testGetSpecificCountry() throws SQLException {
+    public void testGet() throws SQLException {
         Country expectedCountry = new Country(1L, "United States");
         Optional<Country> queriedCountry = countryDao.get(1L);
 
