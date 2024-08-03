@@ -24,6 +24,7 @@ public class CurrencyDao implements Dao<Currency> {
         PreparedStatement preparedStatement = conn.prepareStatement(query);
         preparedStatement.setLong(1, id);
         ResultSet resultSet = preparedStatement.executeQuery();
+        resultSet.next();
 
         return Optional.of(
                 new Currency(resultSet.getLong("ID"), resultSet.getString("CurrencyName"))
@@ -52,7 +53,7 @@ public class CurrencyDao implements Dao<Currency> {
         PreparedStatement preparedStatement = conn.prepareStatement(query);
         preparedStatement.setString(1, currency.getCurrencyName());
 
-        preparedStatement.executeQuery();
+        preparedStatement.executeUpdate();
     }
 
     /* Not needed right now.

@@ -27,8 +27,13 @@ public class DatabaseConnectionProvider {
         }
     }
 
-    public static Connection getConnection() throws SQLException {
+    public static Connection getProductionConnection() throws SQLException {
         String url = "jdbc:postgresql://localhost/postgres";
+        return DriverManager.getConnection(url, properties);
+    }
+
+    public static Connection getTestConnection() throws SQLException {
+        String url = "jdbc:postgresql://localhost/testdb";
         return DriverManager.getConnection(url, properties);
     }
 }

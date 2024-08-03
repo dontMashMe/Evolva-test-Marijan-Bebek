@@ -1,3 +1,6 @@
+-- Set of scripts for setting up a test database environment.
+-- Also to be used for initial production database setup.
+
 -- Create Currency table
 CREATE TABLE Currency (
     ID SERIAL PRIMARY KEY,
@@ -71,3 +74,26 @@ BEGIN
     INSERT INTO Trip (currencyId, cityId, savedAmount) VALUES (currencyId, cityId, savedAmount);
 END;
 $$;
+
+-- DO NOT RUN THESE WHEN INITIALLY SETTING UP THE PROD DATABASE.
+-- Prod database data should come via CSV files!
+
+-- Insert dummy data into Currency table
+INSERT INTO Currency (CurrencyName) VALUES ('USD');
+INSERT INTO Currency (CurrencyName) VALUES ('EUR');
+INSERT INTO Currency (CurrencyName) VALUES ('GBP');
+
+-- Insert dummy data into Country table
+INSERT INTO Country (CountryName) VALUES ('United States');
+INSERT INTO Country (CountryName) VALUES ('Germany');
+INSERT INTO Country (CountryName) VALUES ('United Kingdom');
+
+-- Insert dummy data into City table
+INSERT INTO City (CityName, CountryID) VALUES ('New York', 1);
+INSERT INTO City (CityName, CountryID) VALUES ('Berlin', 2);
+INSERT INTO City (CityName, CountryID) VALUES ('London', 3);
+
+-- Insert dummy data into Trip table
+INSERT INTO Trip (CurrencyID, CityID, SavedAmount) VALUES (1, 1, 1000);
+INSERT INTO Trip (CurrencyID, CityID, SavedAmount) VALUES (2, 2, 2000);
+INSERT INTO Trip (CurrencyID, CityID, SavedAmount) VALUES (3, 3, 3000);

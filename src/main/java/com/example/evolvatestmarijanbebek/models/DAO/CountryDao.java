@@ -24,6 +24,7 @@ public class CountryDao implements Dao<Country> {
         PreparedStatement preparedStatement = conn.prepareStatement(query);
         preparedStatement.setLong(1, id);
         ResultSet resultSet = preparedStatement.executeQuery();
+        resultSet.next();
 
         return Optional.of(
                 new Country(resultSet.getLong("ID"), resultSet.getString("CountryName"))
@@ -33,7 +34,7 @@ public class CountryDao implements Dao<Country> {
     @Override
     public List<Country> getAll() throws SQLException {
         List<Country> allCountries = new ArrayList<>();
-        String query = "SELECT * FROM Currency;";
+        String query = "SELECT * FROM Country;";
         PreparedStatement preparedStatement = conn.prepareStatement(query);
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
@@ -52,7 +53,7 @@ public class CountryDao implements Dao<Country> {
         PreparedStatement preparedStatement = conn.prepareStatement(query);
         preparedStatement.setString(1, country.getCountryName());
 
-        preparedStatement.executeQuery();
+        preparedStatement.executeUpdate();
     }
 
     /* Not needed right now.

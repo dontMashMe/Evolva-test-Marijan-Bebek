@@ -8,7 +8,9 @@ public enum PathConstants {
 
     /*Test paths*/
     TestUploadDir("src/test/resources/uploads"),
-    SampleCSVFile("src/test/resources/uploads/lobotomized.csv");
+    SampleCSVFile("src/test/resources/uploads/lobotomized.csv"),
+    InitTestDatabaseScript("src/test/resources/init.sql"),
+    CleanupTestDatabaseScript("src/test/resources/cleanup.sql");
 
     public final String label;
 

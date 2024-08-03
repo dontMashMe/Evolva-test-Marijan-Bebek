@@ -11,13 +11,13 @@ import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class DatabaseConnectionProviderTest {
+public class ProductionDatabaseConnectionProviderTest {
     private static Connection connection;
 
     @BeforeAll
     public static void setup() {
         try {
-            connection = DatabaseConnectionProvider.getConnection();
+            connection = DatabaseConnectionProvider.getProductionConnection();
         } catch (SQLException e) {
             fail("Filed to establish a connection " + e.getMessage());
         }

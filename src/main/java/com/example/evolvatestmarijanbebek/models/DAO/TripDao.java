@@ -2,10 +2,7 @@ package com.example.evolvatestmarijanbebek.models.DAO;
 
 import com.example.evolvatestmarijanbebek.models.mappings.Trip;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -27,13 +24,14 @@ public class TripDao implements Dao<Trip> {
 
                 INNER JOIN Currency curr on t.currencyId = curr.id\
 
-                INNER JOIN City ci on t.CityId = ci.id; \
+                INNER JOIN City ci on t.CityId = ci.id \
                 
-                WHERE id = ?""";
+                WHERE t.id = ?""";
         PreparedStatement preparedStatement = conn.prepareStatement(query);
         preparedStatement.setLong(1, id);
 
         ResultSet resultSet = preparedStatement.executeQuery();
+        resultSet.next();
 
         return Optional.of(new Trip(
                         resultSet.getLong("id"),
@@ -84,11 +82,11 @@ public class TripDao implements Dao<Trip> {
     public void save(Trip trip) throws SQLException {
         String query = "CALL insert_trip(?, ?, ?)";
 
-        PreparedStatement preparedStatement = conn.prepareStatement(query);
-        preparedStatement.setString(1, trip.getCurrencyName());
-        preparedStatement.setString(2, trip.getCityName());
-        preparedStatement.setInt(2, trip.getSavedAmount());
+        CallableStatement callableStatement = conn.prepareCall(query);
+        callableStatement.setString(1, trip.getCurrencyName());
+        callableStatement.setString(2, trip.getCityName());
+        callableStatement.setInt(3, trip.getSavedAmount());
 
-        preparedStatement.executeQuery();
+        callableStatement.executeUpdate();
     }
 }
