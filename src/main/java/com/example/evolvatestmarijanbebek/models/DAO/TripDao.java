@@ -71,12 +71,13 @@ public class TripDao implements Dao<Trip> {
      * Trip model and Trip table aren't mapped 1:1 for simplicity's sake.
      * The job of mapping the Currency name to currency id, and city name to city id is relegated to the database, through
      * the call of a stored procedure.
-     *
+     * <br>
      * insert_trip procedure does the following:
-     *  * Take currency name, city name and saved amount as params
-     *  * Retrieve currency id & city id through the names
-     *  * Insert new row into Trip table.
-     *
+     * <ul>
+     *  <li> Take currency name, city name and saved amount as params.</li>
+     *  <li> Retrieve currency id & city id through the names.</li>
+     *  <li> Insert new row into Trip table.</li>
+     *</ul>
      * */
     @Override
     public void save(Trip trip) throws SQLException {

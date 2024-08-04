@@ -2,8 +2,10 @@ package Integration.DAOs;
 
 import com.example.evolvatestmarijanbebek.models.DAO.CurrencyDao;
 import com.example.evolvatestmarijanbebek.models.mappings.Currency;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -13,6 +15,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CurrencyDAOTest extends BaseDAOTest {
     private final CurrencyDao currencyDao = new CurrencyDao(connection);
 
@@ -46,5 +49,20 @@ public class CurrencyDAOTest extends BaseDAOTest {
         currencyDao.save(newCurrency);
 
         assertEquals(newCurrency, currencyDao.get(newCurrency.getId()).orElse(null));
+    }
+
+    @Test
+    @Order(4)
+    public void testBulkInsert() throws SQLException {
+        List<Currency> currencies = Arrays.asList(
+                new Currency(5L, "AUD"),
+                new Currency(6L, "BYN"),
+                new Currency(7L, "RBL"),
+                new Currency(8L, "COP")
+        );
+        currencyDao.bulkSave(currencies);
+
+        // assert test by querying one of the newly inserted values
+        assertEquals(new Currency(7L, "RBL"), currencyDao.get(7L).orElse(null));
     }
 }

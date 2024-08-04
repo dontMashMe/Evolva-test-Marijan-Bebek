@@ -4,8 +4,7 @@ import com.example.evolvatestmarijanbebek.models.mappings.City;
 import com.example.evolvatestmarijanbebek.models.mappings.Country;
 import com.example.evolvatestmarijanbebek.models.mappings.Currency;
 import com.example.evolvatestmarijanbebek.models.mappings.Trip;
-import com.example.evolvatestmarijanbebek.services.CSVHandler;
-import com.example.evolvatestmarijanbebek.services.DataImporter;
+import com.example.evolvatestmarijanbebek.services.DataExtractor;
 import com.example.evolvatestmarijanbebek.utils.PathConstants;
 import org.junit.jupiter.api.Test;
 
@@ -13,11 +12,8 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class DataImporterTest {
-    private static final CSVHandler csvHandler = new CSVHandler(PathConstants.TestUploadDir.label);
-    private final DataImporter dataImporter = new DataImporter(readFiles);
-
-    private static final Set<String> readFiles = csvHandler.getAllFilesInUploadDir();
+public class DataExtractorTest {
+    private final DataExtractor dataExtractor = new DataExtractor();
 
     @Test
     public void testGetCountryNameFromFile() {              // also tests correct capitalization
@@ -26,7 +22,7 @@ public class DataImporterTest {
         String[] sampleCSVParts = PathConstants.SampleCSVFile.label.split("/");
         String sampleCSVFileName = sampleCSVParts[sampleCSVParts.length - 1];
 
-        Country importedCountry = dataImporter.getCountryNameFromFile(sampleCSVFileName);
+        Country importedCountry = dataExtractor.getCountryNameFromFile(sampleCSVFileName);
 
         assertEquals(expectedCountry, importedCountry);
     }
@@ -39,7 +35,7 @@ public class DataImporterTest {
                 new Currency(1L, "HRK")
         );
 
-        Set<Currency> importedCurrencies = dataImporter.getUniqueCurrenciesFromFile(PathConstants.SampleCSVFile.label);
+        Set<Currency> importedCurrencies = dataExtractor.getUniqueCurrenciesFromFile(PathConstants.SampleCSVFile.label);
 
         assertEquals(expectedCurrencies, importedCurrencies);
     }
@@ -55,7 +51,7 @@ public class DataImporterTest {
         );
 
 
-        List<City> importedCities = dataImporter.getCityDataFromFile(
+        List<City> importedCities = dataExtractor.getCityDataFromFile(
                 PathConstants.SampleCSVFile.label, new Country(1L, "Lobotomized")
         );
 
@@ -72,7 +68,7 @@ public class DataImporterTest {
                 new Trip(1L, "HRK", "Kutjevo", 15)
         );
 
-        List<Trip> importedTrips = dataImporter.getTripDataFromFile(PathConstants.SampleCSVFile.label);
+        List<Trip> importedTrips = dataExtractor.getTripDataFromFile(PathConstants.SampleCSVFile.label);
 
         assertEquals(expectedTrips, importedTrips);
     }

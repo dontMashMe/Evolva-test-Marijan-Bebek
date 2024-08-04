@@ -12,13 +12,8 @@ import java.util.List;
 import java.util.Set;
 
 
-public class DataImporter {
-    private final Set<String> readFiles;
+public class DataExtractor {
     private final CSVHandler csvHandler = new CSVHandler(PathConstants.UploadDir.label);
-
-    public DataImporter(Set<String> readFiles) {
-        this.readFiles = readFiles;
-    }
 
     public Country getCountryNameFromFile(String file) {
         String countryName = file.split("\\.")[0]; // remove .csv
@@ -54,9 +49,8 @@ public class DataImporter {
 
     public List<Trip> getTripDataFromFile(String file) {
         List<Trip> tripList = new ArrayList<>();
-
-        // would be nice to use Spark here ;)
         List<List<String>> loadedData = csvHandler.loadCsv(file);
+
         for (List<String> line : loadedData) {
             String cityName = line.getFirst();
             String currencyName = line.get(1);
@@ -65,12 +59,6 @@ public class DataImporter {
         }
 
         return tripList;
-    }
-
-
-    // This method is untested, however all the individual ones inside are.
-    public void loadData() {
-
     }
 
 }

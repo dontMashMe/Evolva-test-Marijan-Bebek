@@ -1,6 +1,7 @@
 package com.example.evolvatestmarijanbebek.models.DAO;
 
 import com.example.evolvatestmarijanbebek.models.mappings.Country;
+import com.example.evolvatestmarijanbebek.models.mappings.Currency;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -56,12 +57,16 @@ public class CountryDao implements Dao<Country> {
         preparedStatement.executeUpdate();
     }
 
-    /* Not needed right now.
-    @Override
-    public void delete(Country country) throws SQLException {
-        String query = "DELETE FROM Country WHERE id = %d".formatted(country.getId());
+    public void bulkSave(List<Country> countries) throws SQLException {
+        String query = "INSERT INTO Country(CountryName) VALUES (?)";
         PreparedStatement preparedStatement = conn.prepareStatement(query);
-        preparedStatement.executeQuery();
+
+        for (Country country : countries) {
+            preparedStatement.setString(1, country.getCountryName());
+            preparedStatement.addBatch();
+        }
+
+        preparedStatement.executeBatch();
+        preparedStatement.close();
     }
-     */
 }

@@ -56,6 +56,19 @@ public class CurrencyDao implements Dao<Currency> {
         preparedStatement.executeUpdate();
     }
 
+    public void bulkSave(List<Currency> currencies) throws SQLException {
+        String query = "INSERT INTO Currency(CurrencyName) VALUES (?)";
+        PreparedStatement preparedStatement = conn.prepareStatement(query);
+
+        for (Currency currency : currencies) {
+            preparedStatement.setString(1, currency.getCurrencyName());
+            preparedStatement.addBatch();
+        }
+
+        preparedStatement.executeBatch();
+        preparedStatement.close();
+    }
+
     /* Not needed right now.
     @Override
     public void delete(Currency currency) throws SQLException {

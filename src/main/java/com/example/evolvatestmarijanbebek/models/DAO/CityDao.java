@@ -67,12 +67,13 @@ public class CityDao implements Dao<City> {
     /**
      * Since the models and database tables aren't mapped 1:1 for simplicity’s sake,
      * we can let the database do the heavy work by relegating the CountryName = CountryId mapping to it.
-     *
+     * <br>
      * The method simply calls the "insert_city" procedure, which does the following:
-     *  * take city name, country name as parameters
-     *  * find the country id by country name
-     *  * insert new row into City table
-     *
+     * <ul>
+     *  <li> Take city name, country name as parameters.</li>
+     *  <li> Find the country id by country name.</li>
+     *  <li> Insert new row into City table.</li>
+     *</ul>
      * */
     @Override
     public void save(City city) throws SQLException {
