@@ -8,6 +8,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.util.Duration;
 
+import java.util.Currency;
+import java.util.List;
 import java.util.Set;
 
 
@@ -15,33 +17,15 @@ public class MoneyCounterController {
     @FXML
     private Label statusText;
 
-    private final CSVHandler csvHandler = new CSVHandler(PathConstants.UploadDir.label);
-
-    private Set<String> foundFiles;
-
     @FXML
     protected void onHelloButtonClick() {
         statusText.setText("Searching for trip files in upload directory.");
-        startLoadingAnimation();
-    }
+        CSVHandler csvHandler = new CSVHandler(PathConstants.UploadDir.label);
 
-    /**
-     * Displays a short text animation.
-     * */
-    private void startLoadingAnimation() {
-        Timeline timeline = new Timeline(
-                new KeyFrame(Duration.seconds(0.5), _ -> statusText.setText("Searching for trip files in upload directory.")),
-                new KeyFrame(Duration.seconds(1.0), _ -> statusText.setText("Searching for trip files in upload directory..")),
-                new KeyFrame(Duration.seconds(1.5), _ -> statusText.setText("Searching for trip files in upload directory..."))
-        );
-
-        timeline.setCycleCount(2);
-        timeline.setOnFinished(event -> searchFiles());
-        timeline.play();
-    }
-
-    private void searchFiles() {
-        foundFiles = csvHandler.getAllFilesInUploadDir();
+        Set<String>foundFiles = csvHandler.getAllFilesInUploadDir();
         statusText.setText("Found %d trip files!".formatted(foundFiles.size()));
+
+
     }
+
 }

@@ -34,7 +34,9 @@ public class CSVHandlerTest {
         List<List<String>> expected = Arrays.asList(
                 Arrays.asList("Zagreb", "EUR", "1"),
                 Arrays.asList("Osijek", "EUR", "2"),
-                Arrays.asList("Rijeka", "EUR", "4")
+                Arrays.asList("Rijeka", "EUR", "4"),
+                Arrays.asList("Split", "USD", "5"),
+                Arrays.asList("Kutjevo", "HRK", "15")
         );
 
         assertEquals(expected, result, "The CSV data should match the expected data");
