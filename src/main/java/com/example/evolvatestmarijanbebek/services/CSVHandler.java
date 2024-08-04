@@ -6,6 +6,7 @@ import com.opencsv.exceptions.CsvValidationException;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -27,16 +28,23 @@ public class CSVHandler {
      */
     public List<List<String>> loadCsv(String fileName) {
         List<List<String>> records = new ArrayList<>();
-        try (CSVReader csvReader = new CSVReader(new FileReader(fileName))) {
+        try (CSVReader csvReader = new CSVReader(new FileReader(String.valueOf(Paths.get(this.path, fileName))))) {
             String[] values;
             while ((values = csvReader.readNext()) != null) {
-                // Trim each value and add to the list
-                records.add(
-                        Arrays.stream(values).map(String::trim).collect(Collectors.toList())
-                );
+                // Trim each value and check if the row is empty or contains only whitespace
+                List<String> trimmedValues = Arrays.stream(values)
+                        .map(value -> value == null ? "" : value.trim())
+                        .collect(Collectors.toList());
+
+                // Check if the row is empty or contains only whitespace
+                if (trimmedValues.stream().allMatch(String::isEmpty)) {
+                    continue; // Skip this row
+                }
+
+                records.add(trimmedValues);
             }
         } catch (CsvValidationException | IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Error reading CSV file: " + fileName, e);
         }
         return records;
     }

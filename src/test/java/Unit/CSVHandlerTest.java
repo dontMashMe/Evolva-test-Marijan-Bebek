@@ -42,4 +42,13 @@ public class CSVHandlerTest {
         assertEquals(expected, result, "The CSV data should match the expected data");
     }
 
+    @Test
+    public void testLoadCSVWithEmptySpaces() {
+        List<List<String>> result = csvHandler.loadCsv("germany.csv");
+        List<List<String>> expected = Arrays.asList(
+                Arrays.asList("Berlin", "EUR", "10"),
+                Arrays.asList("Muenchen", "EUR", "20")
+        );
+    }
+
 }

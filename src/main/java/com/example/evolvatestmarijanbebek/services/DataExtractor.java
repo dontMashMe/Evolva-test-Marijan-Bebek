@@ -4,7 +4,6 @@ import com.example.evolvatestmarijanbebek.models.mappings.City;
 import com.example.evolvatestmarijanbebek.models.mappings.Country;
 import com.example.evolvatestmarijanbebek.models.mappings.Currency;
 import com.example.evolvatestmarijanbebek.models.mappings.Trip;
-import com.example.evolvatestmarijanbebek.utils.PathConstants;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -13,7 +12,12 @@ import java.util.Set;
 
 
 public class DataExtractor {
-    private final CSVHandler csvHandler = new CSVHandler(PathConstants.UploadDir.label);
+    private final CSVHandler csvHandler;
+
+    public DataExtractor(String targetDir) {
+        this.csvHandler = new CSVHandler(targetDir);
+    }
+
 
     public Country getCountryNameFromFile(String file) {
         String countryName = file.split("\\.")[0]; // remove .csv

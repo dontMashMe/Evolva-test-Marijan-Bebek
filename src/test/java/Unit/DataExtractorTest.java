@@ -13,7 +13,7 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DataExtractorTest {
-    private final DataExtractor dataExtractor = new DataExtractor();
+    private final DataExtractor dataExtractor = new DataExtractor(PathConstants.TestUploadDir.label);
 
     @Test
     public void testGetCountryNameFromFile() {              // also tests correct capitalization
