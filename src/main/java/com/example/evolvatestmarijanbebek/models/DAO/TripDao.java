@@ -90,4 +90,26 @@ public class TripDao implements Dao<Trip> {
 
         callableStatement.executeUpdate();
     }
+
+    public long getLastKnownId() throws SQLException {
+        String query = """
+                SELECT id \
+
+                FROM Trip \
+
+                ORDER BY id DESC \
+
+                LIMIT 1""";
+
+        PreparedStatement preparedStatement = conn.prepareStatement(query);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        resultSet.next();
+
+
+        if (resultSet.next()) {
+            return resultSet.getLong("id");
+        } else {
+            return -1;
+        }
+    }
 }

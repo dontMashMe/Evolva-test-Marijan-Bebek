@@ -1,6 +1,6 @@
 package Unit;
 
-import com.example.evolvatestmarijanbebek.services.CSVHandler;
+import com.example.evolvatestmarijanbebek.services.fileHandling.CSVHandler;
 import com.example.evolvatestmarijanbebek.utils.PathConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

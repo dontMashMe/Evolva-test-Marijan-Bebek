@@ -23,7 +23,8 @@ public class TripDAOTest extends BaseDAOTest {
         List<Trip> expected = Arrays.asList(
                 new Trip(1L, "USD", "New York", 1000),
                 new Trip(2L, "EUR", "Berlin", 2000),
-                new Trip(3L, "GBP", "London", 3000)
+                new Trip(3L, "EUR", "Frankfurt", 5000),
+                new Trip(4L, "GBP", "London", 3000)
         );
 
         assertEquals(expected, tripList, "The queried Trip data should match the expected array");
@@ -41,7 +42,7 @@ public class TripDAOTest extends BaseDAOTest {
     @Test
     @Order(3)
     public void testInsert() throws SQLException {
-        Trip newTrip = new Trip(4L, "USD", "New York", 2000);
+        Trip newTrip = new Trip(5L, "USD", "New York", 2000);
         tripDao.save(newTrip);
 
         assertEquals(newTrip, tripDao.get(newTrip.getId()).orElse(null));

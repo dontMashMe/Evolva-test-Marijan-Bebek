@@ -1,4 +1,4 @@
-package com.example.evolvatestmarijanbebek.services;
+package com.example.evolvatestmarijanbebek.services.database;
 
 import com.example.evolvatestmarijanbebek.utils.PathConstants;
 

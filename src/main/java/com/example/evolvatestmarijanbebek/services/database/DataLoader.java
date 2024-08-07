@@ -1,4 +1,4 @@
-package com.example.evolvatestmarijanbebek.services;
+package com.example.evolvatestmarijanbebek.services.database;
 
 import com.example.evolvatestmarijanbebek.models.DAO.CityDao;
 import com.example.evolvatestmarijanbebek.models.DAO.CountryDao;
@@ -42,5 +42,10 @@ public class DataLoader {
         for (Trip trip : trips) {
             tripDao.save(trip);
         }
+    }
+
+    public long getLastTripId() throws SQLException {
+        TripDao tripDao = new TripDao(connection);
+        return tripDao.getLastKnownId();
     }
 }

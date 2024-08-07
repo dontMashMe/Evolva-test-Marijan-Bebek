@@ -91,9 +91,11 @@ INSERT INTO Country (CountryName) VALUES ('United Kingdom');
 -- Insert dummy data into City table
 INSERT INTO City (CityName, CountryID) VALUES ('New York', 1);
 INSERT INTO City (CityName, CountryID) VALUES ('Berlin', 2);
+INSERT INTO City (CityName, CountryID) VALUES ('Frankfurt', 2);
 INSERT INTO City (CityName, CountryID) VALUES ('London', 3);
 
 -- Insert dummy data into Trip table
 INSERT INTO Trip (CurrencyID, CityID, SavedAmount) VALUES (1, 1, 1000);
 INSERT INTO Trip (CurrencyID, CityID, SavedAmount) VALUES (2, 2, 2000);
-INSERT INTO Trip (CurrencyID, CityID, SavedAmount) VALUES (3, 3, 3000);
+INSERT INTO Trip (CurrencyID, CityID, SavedAmount) VALUES (2, 3, 5000);
+INSERT INTO Trip (CurrencyID, CityID, SavedAmount) VALUES (3, 4, 3000);

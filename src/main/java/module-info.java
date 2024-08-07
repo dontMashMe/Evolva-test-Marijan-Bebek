@@ -14,6 +14,9 @@ module com.example.evolvatestmarijanbebek {
     exports com.example.evolvatestmarijanbebek.utils;
     exports com.example.evolvatestmarijanbebek.models.mappings;
     exports com.example.evolvatestmarijanbebek.models.DAO;
+    exports com.example.evolvatestmarijanbebek.models.reports;
 
     opens com.example.evolvatestmarijanbebek.controllers to javafx.fxml;
+    exports com.example.evolvatestmarijanbebek.services.fileHandling;
+    exports com.example.evolvatestmarijanbebek.services.database;
 }

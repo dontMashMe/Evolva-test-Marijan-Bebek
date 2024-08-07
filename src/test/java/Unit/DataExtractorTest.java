@@ -4,7 +4,7 @@ import com.example.evolvatestmarijanbebek.models.mappings.City;
 import com.example.evolvatestmarijanbebek.models.mappings.Country;
 import com.example.evolvatestmarijanbebek.models.mappings.Currency;
 import com.example.evolvatestmarijanbebek.models.mappings.Trip;
-import com.example.evolvatestmarijanbebek.services.DataExtractor;
+import com.example.evolvatestmarijanbebek.services.fileHandling.DataExtractor;
 import com.example.evolvatestmarijanbebek.utils.PathConstants;
 import org.junit.jupiter.api.Test;
 

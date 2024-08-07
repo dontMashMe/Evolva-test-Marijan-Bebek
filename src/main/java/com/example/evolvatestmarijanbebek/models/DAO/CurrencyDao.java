@@ -69,13 +69,4 @@ public class CurrencyDao implements Dao<Currency> {
         preparedStatement.close();
     }
 
-    /* Not needed right now.
-    @Override
-    public void delete(Currency currency) throws SQLException {
-        String query = "DELETE FROM Currency WHERE id = %d".formatted(currency.getId());
-        PreparedStatement preparedStatement = conn.prepareStatement(query);
-        preparedStatement.executeQuery();
-    }
-
-     */
 }

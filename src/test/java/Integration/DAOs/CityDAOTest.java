@@ -23,7 +23,9 @@ public class CityDAOTest extends BaseDAOTest {
         List<City> expected = Arrays.asList(
                 new City(1L, "New York", "United States"),
                 new City(2L, "Berlin", "Germany"),
-                new City(3L, "London", "United Kingdom")
+                new City(3L, "Frankfurt", "Germany"),
+                new City(4L, "London", "United Kingdom")
+
         );
 
         assertEquals(expected, cityList, "The queried City data should match the expected array");
@@ -41,7 +43,7 @@ public class CityDAOTest extends BaseDAOTest {
     @Test
     @Order(3)
     public void testInsert() throws SQLException {
-        City newCity = new City(4L, "Washington D.C", "United States");
+        City newCity = new City(5L, "Washington D.C", "United States");
         cityDao.save(newCity);
 
         assertEquals(newCity, cityDao.get(newCity.getId()).orElse(null));

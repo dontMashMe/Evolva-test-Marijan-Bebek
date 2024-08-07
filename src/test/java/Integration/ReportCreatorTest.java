@@ -1,10 +1,12 @@
-package Integration.DAOs;
+package Integration;
 
+import com.example.evolvatestmarijanbebek.models.mappings.Country;
+import com.example.evolvatestmarijanbebek.services.ReportCreator;
 import com.example.evolvatestmarijanbebek.services.database.DatabaseConnectionProvider;
-
 import com.example.evolvatestmarijanbebek.utils.PathConstants;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -13,14 +15,13 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
+public class ReportCreatorTest {
+    private static Connection connection;
 
-/**
- * Abstract class which implements the common setup & cleanup operations.
- */
-public abstract class BaseDAOTest {
-    protected static Connection connection;
+    private static ReportCreator reportCreator;
 
     private static void getConnection() {
         try {
@@ -49,6 +50,8 @@ public abstract class BaseDAOTest {
     public static void setup() throws SQLException {
         getConnection();
         runInitScripts();
+
+        reportCreator = new ReportCreator(connection);
     }
 
     private static void closeConnection() {
@@ -82,9 +85,26 @@ public abstract class BaseDAOTest {
         closeConnection();
     }
 
-    protected abstract void testGet() throws SQLException;
+    @Test
+    public void testGenerateNewTripsReport() throws SQLException {
+        long lastTripId = 2L;
+        Country country = new Country(1L, "Germany");
 
-    protected abstract void testGetAll() throws SQLException;
 
-    protected abstract void testInsert() throws SQLException;
+        System.out.println(reportCreator.generateNewTripsReport(lastTripId, country));
+    }
+
+    @Test
+    public void testGenerateAllTripsReport() throws SQLException {
+        String expected = """
+                "germany.csv" found
+                     Totals by currencies:
+                         EUR: 7000
+                """;
+
+        Country country = new Country(1L, "Germany");
+
+        assertEquals(reportCreator.generateTotalTripsReport(country), expected);
+    }
+
 }

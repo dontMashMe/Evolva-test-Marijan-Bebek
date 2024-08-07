@@ -69,4 +69,5 @@ public class CountryDao implements Dao<Country> {
         preparedStatement.executeBatch();
         preparedStatement.close();
     }
+
 }
