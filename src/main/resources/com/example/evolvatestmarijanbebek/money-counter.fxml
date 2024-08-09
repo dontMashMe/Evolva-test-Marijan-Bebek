@@ -8,35 +8,23 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" spacing="10.0" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.evolvatestmarijanbebek.controllers.SantaTripsController">
-
+<VBox alignment="CENTER" spacing="30.0" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.evolvatestmarijanbebek.controllers.SantaTripsController">
     <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+        <Insets bottom="30.0" left="30.0" right="30.0" top="30.0"/>
     </padding>
 
-    <!-- Top Section -->
-    <VBox alignment="CENTER" spacing="10.0">
-        <Button text="Check for New Trips" onAction="#onHelloButtonClick"/>
-        <Label text="Status:" style="-fx-font-weight: bold;"/>
-        <Label fx:id="statusText" wrapText="true"/>
-    </VBox>
+    <Button text="Check for new trips" onAction="#onHelloButtonClick" prefWidth="200.0" prefHeight="50.0"/>
+    <Label fx:id="statusText" prefWidth="600.0" prefHeight="40.0"/>
 
-    <!-- Middle Section -->
     <HBox spacing="20.0">
-        <VBox alignment="CENTER" spacing="10.0">
-            <Label text="Recent Trip Data" style="-fx-font-weight: bold;"/>
-            <ScrollPane fitToWidth="true">
-                <TextArea fx:id="recentTripsArea" editable="false" wrapText="true"/>
-            </ScrollPane>
+        <VBox spacing="10.0" prefWidth="300.0">
+            <Label text="Recent Trips Data:"/>
+            <TextArea fx:id="recentTripsArea" prefWidth="300.0" prefHeight="400.0" editable="false"/>
         </VBox>
-
-        <!-- Right Section -->
-        <VBox alignment="CENTER" spacing="10.0">
-            <Label text="Total Trip Data" style="-fx-font-weight: bold;"/>
-            <ScrollPane fitToWidth="true">
-                <TextArea fx:id="totalTripsArea" editable="false" wrapText="true"/>
-            </ScrollPane>
+        <VBox spacing="10.0" prefWidth="300.0">
+            <Label text="All Trips Data:"/>
+            <TextArea fx:id="totalTripsArea" prefWidth="300.0" prefHeight="400.0" editable="false"/>
         </VBox>
     </HBox>
-
 </VBox>

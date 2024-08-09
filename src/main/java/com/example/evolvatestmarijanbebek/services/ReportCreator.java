@@ -35,13 +35,9 @@ public class ReportCreator {
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, country.getCountryName());
         preparedStatement.setLong(2, lastTripId);
-
-        System.out.println(preparedStatement);
-
         ResultSet resultSet = preparedStatement.executeQuery();
 
         Map<String, Integer> reportData = new HashMap<>();
-
         while (resultSet.next()) {
             reportData.put(
                     resultSet.getString("CurrencyName"),
@@ -70,11 +66,9 @@ public class ReportCreator {
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, country.getCountryName());
-
             ResultSet resultSet = preparedStatement.executeQuery();
 
             Map<String, Integer> reportData = new HashMap<>();
-
             while (resultSet.next()) {
                 reportData.put(
                         resultSet.getString("CurrencyName"),

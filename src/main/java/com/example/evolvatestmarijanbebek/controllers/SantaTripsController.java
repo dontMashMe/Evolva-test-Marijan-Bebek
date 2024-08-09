@@ -94,8 +94,12 @@ public class SantaTripsController {
         // Generate reports for all trip data available.
         totalTripsArea.setText(reportCreator.generateTotalTripsReport());
 
+        if (foundCountries.isEmpty()) {
+            statusText.setText("Upload directory is empty!");
+        } else {
+            statusText.setText("Report generated successfully!");
+        }
 
-        statusText.setText("Data successfully loaded!");
     }
 
 }
