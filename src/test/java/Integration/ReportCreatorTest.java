@@ -97,14 +97,18 @@ public class ReportCreatorTest {
     @Test
     public void testGenerateAllTripsReport() throws SQLException {
         String expected = """
-                "germany.csv" found
-                     Totals by currencies:
-                         EUR: 7000
+               "united states.csv" found
+                    Totals by currencies:
+                        USD: 1000
+               "germany.csv" found
+                    Totals by currencies:
+                        EUR: 7000
+               "united kingdom.csv" found
+                    Totals by currencies:
+                        GBP: 3000
                 """;
 
-        Country country = new Country(1L, "Germany");
-
-        assertEquals(reportCreator.generateTotalTripsReport(country), expected);
+        assertEquals(reportCreator.generateTotalTripsReport(), expected);
     }
 
 }

@@ -50,7 +50,10 @@ public class CountryDao implements Dao<Country> {
 
     @Override
     public void save(Country country) throws SQLException {
-        String query = "INSERT INTO Country(CountryName) VALUES (?)";
+        String query = """
+                        INSERT INTO Country(CountryName) VALUES (?) \
+                        ON CONFLICT (CountryName) DO NOTHING
+                        """;
         PreparedStatement preparedStatement = conn.prepareStatement(query);
         preparedStatement.setString(1, country.getCountryName());
 

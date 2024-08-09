@@ -103,8 +103,6 @@ public class TripDao implements Dao<Trip> {
 
         PreparedStatement preparedStatement = conn.prepareStatement(query);
         ResultSet resultSet = preparedStatement.executeQuery();
-        resultSet.next();
-
 
         if (resultSet.next()) {
             return resultSet.getLong("id");

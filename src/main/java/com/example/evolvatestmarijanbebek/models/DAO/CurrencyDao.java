@@ -49,15 +49,19 @@ public class CurrencyDao implements Dao<Currency> {
 
     @Override
     public void save(Currency currency) throws SQLException {
-        String query = "INSERT INTO Currency(CurrencyName) VALUES (?)";
+        String query = """
+                        INSERT INTO Currency(CurrencyName) VALUES (?) \
+                        ON CONFLICT (CurrencyName) DO NOTHING
+                        """;
         PreparedStatement preparedStatement = conn.prepareStatement(query);
         preparedStatement.setString(1, currency.getCurrencyName());
 
         preparedStatement.executeUpdate();
+        preparedStatement.close();
     }
 
     public void bulkSave(List<Currency> currencies) throws SQLException {
-        String query = "INSERT INTO Currency(CurrencyName) VALUES (?)";
+        String query = "INSERT INTO Currency(CurrencyName) VALUES (?) ON CONFLICT (CurrencyName) DO NOTHING";
         PreparedStatement preparedStatement = conn.prepareStatement(query);
 
         for (Currency currency : currencies) {

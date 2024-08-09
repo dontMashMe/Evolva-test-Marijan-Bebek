@@ -4,19 +4,19 @@
 -- Create Currency table
 CREATE TABLE Currency (
     ID SERIAL PRIMARY KEY,
-    CurrencyName VARCHAR NOT NULL
+    CurrencyName VARCHAR NOT NULL UNIQUE
 );
 
 -- Create Country table
 CREATE TABLE Country (
     ID SERIAL PRIMARY KEY,
-    CountryName VARCHAR NOT NULL
+    CountryName VARCHAR NOT NULL UNIQUE
 );
 
 -- Create City table
 CREATE TABLE City (
     ID SERIAL PRIMARY KEY,
-    CityName VARCHAR NOT NULL,
+    CityName VARCHAR NOT NULL UNIQUE,
     CountryID INT NOT NULL,
     CONSTRAINT fk_country FOREIGN KEY (CountryID) REFERENCES Country(ID)
 );
@@ -32,21 +32,26 @@ CREATE TABLE Trip (
 );
 
 -- City table insert procedure.
-CREATE OR REPLACE PROCEDURE insert_city(cityName VARCHAR, countryNameP VARCHAR)
+CREATE OR REPLACE PROCEDURE insert_city(cityNameP VARCHAR, countryNameP VARCHAR)
 LANGUAGE plpgsql
 AS $$
 DECLARE
     countryId INT;
 BEGIN
+    -- Retrieve the country ID
     SELECT id INTO countryId FROM Country WHERE countryName = countryNameP;
 
+    -- If no country found, raise an exception
     IF NOT FOUND THEN
-        RAISE EXCEPTION 'Country not found: %', countryName;
+        RAISE EXCEPTION 'Country not found: %', countryNameP;
     END IF;
 
-    INSERT INTO City (cityName, countryId) VALUES (cityName, countryId);
+    -- Insert into the City table, using the parameter cityNameP
+    INSERT INTO City (CityName, CountryID) VALUES (cityNameP, countryId)
+    ON CONFLICT (CityName) DO NOTHING;
 END;
 $$;
+
 
 -- Trip table insert procedure.
 CREATE OR REPLACE PROCEDURE insert_trip(currencyNameP VARCHAR, cityNameP VARCHAR, savedAmount INT)

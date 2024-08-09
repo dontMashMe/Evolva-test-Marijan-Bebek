@@ -44,7 +44,7 @@ public class CountryDAOTest extends BaseDAOTest {
     @Test
     @Order(3)
     public void testInsert() throws SQLException {
-        Country newCountry = new Country(4L, "United States");
+        Country newCountry = new Country(4L, "Panama");
         countryDao.save(newCountry);
 
         assertEquals(newCountry, countryDao.get(newCountry.getId()).orElse(null));
