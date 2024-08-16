@@ -30,7 +30,7 @@ The task is to parse the CSV files provided by Santa’s elves, aggregate the sa
     * New York, USD, 300
     * Los Angeles, USD, 400
 
-## Example ouput
+## Example output
 For each file processed, the program should output the total amount saved by currency.
 
 ```
@@ -76,7 +76,7 @@ If you're using the `psql -U username -d myDataBase -a -f myInsertFile` command,
 #### Creating the test database
 If you wish to run the unit & integration tests, you need to create a new database **testdb** (use the same user/password as for the **postgres**). 
 
-No need to run the init.sql script, the tests themself run it.
+No need to run the init.sql script, the tests themselves run it.
 
 ## Installation
 Assuming you've done the database setup from the previous chapter.
