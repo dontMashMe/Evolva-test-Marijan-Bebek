@@ -5,15 +5,21 @@ import com.example.evolvatestmarijanbebek.models.mappings.Country;
 import com.example.evolvatestmarijanbebek.models.mappings.Currency;
 import com.example.evolvatestmarijanbebek.models.mappings.Trip;
 import com.example.evolvatestmarijanbebek.services.ReportCreator;
-import com.example.evolvatestmarijanbebek.services.fileHandling.CSVHandler;
+import com.example.evolvatestmarijanbebek.services.fileHandling.FileHandler;
 import com.example.evolvatestmarijanbebek.services.fileHandling.DataExtractor;
 import com.example.evolvatestmarijanbebek.services.database.DataLoader;
 import com.example.evolvatestmarijanbebek.services.database.DatabaseConnectionProvider;
 import com.example.evolvatestmarijanbebek.utils.PathConstants;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -28,10 +34,9 @@ public class SantaTripsController {
      */
     @FXML
     public TextArea totalTripsArea;
-    @FXML
-    private TextArea recentTripsArea;
-    @FXML
-    private Label statusText;
+    public TextField uploadDir;
+    public TextArea recentTripsArea;
+    public Label statusText;
 
     /**
      * Create connection to the database.
@@ -50,16 +55,51 @@ public class SantaTripsController {
      * Instances of Services.
      */
     private final DataLoader dataLoader = new DataLoader(connection);
-    private final DataExtractor dataExtractor = new DataExtractor(PathConstants.UploadDir.label);
     private final ReportCreator reportCreator = new ReportCreator(connection);
 
 
+    private void setupDragAndDrop() {
+        recentTripsArea.setOnDragOver(this::handleDragOver);
+        recentTripsArea.setOnDragDropped(this::handleDragDropped);
+    }
+
+    private void handleDragOver(DragEvent event) {
+        if (event.getGestureSource() != recentTripsArea && event.getDragboard().hasFiles()) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    private void handleDragDropped(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        boolean success = false;
+        if (db.hasFiles()) {
+            for (File file : db.getFiles()) {
+                FileHandler.copyFileToUploadDir(file);
+            }
+            success = true;
+            statusText.setText("Files successfully uploaded to '" + PathConstants.UploadDir.label + "'.");
+        }
+        event.setDropCompleted(success);
+        event.consume();
+    }
+
+    @FXML
+    protected void initialize() {
+        setupDragAndDrop();
+        statusText.setText("Add files to the upload directory.");
+        uploadDir.setText(PathConstants.UploadDir.label);
+    }
+
     @FXML
     protected void onHelloButtonClick() throws SQLException {
-        statusText.setText("Searching for trip files in upload directory.");
-        CSVHandler csvHandler = new CSVHandler(PathConstants.UploadDir.label);
+        DataExtractor dataExtractor = new DataExtractor(PathConstants.UploadDir.label);
 
-        Set<String> foundFiles = csvHandler.getAllFilesInUploadDir();
+
+        statusText.setText("Searching for trip files in upload directory.");
+        FileHandler fileHandler = new FileHandler(PathConstants.UploadDir.label);
+
+        Set<String> foundFiles = fileHandler.getAllFilesInUploadDir();
         statusText.setText("Found %d trip files!".formatted(foundFiles.size()));
 
 
@@ -102,4 +142,15 @@ public class SantaTripsController {
 
     }
 
+    public void onReloadDirClick() {
+
+        File f = new File(uploadDir.getText());
+        if (f.exists() && f.isDirectory()) {
+            PathConstants.UploadDir.label = uploadDir.getText();
+            statusText.setText("Changed upload directory to '%s'.".formatted(uploadDir.getText()));
+        } else {
+            statusText.setText("Provided directory does not exist.");
+        }
+
+    }
 }

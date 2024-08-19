@@ -12,7 +12,7 @@ public enum PathConstants {
     InitTestDatabaseScript("src/test/resources/init.sql"),
     CleanupTestDatabaseScript("src/test/resources/cleanup.sql");
 
-    public final String label;
+    public String label;
 
     PathConstants(String s) {
         this.label = s;

@@ -12,10 +12,10 @@ import java.util.Set;
 
 
 public class DataExtractor {
-    private final CSVHandler csvHandler;
+    private final FileHandler fileHandler;
 
     public DataExtractor(String targetDir) {
-        this.csvHandler = new CSVHandler(targetDir);
+        this.fileHandler = new FileHandler(targetDir);
     }
 
 
@@ -29,7 +29,7 @@ public class DataExtractor {
 
     public Set<Currency> getUniqueCurrenciesFromFile(String file) {
         List<Currency> currencyList = new ArrayList<>();
-        List<List<String>> loadedData = csvHandler.loadCsv(file);
+        List<List<String>> loadedData = fileHandler.loadCsv(file);
 
         for (List<String> line : loadedData) {
             String currency = line.get(1);
@@ -41,7 +41,7 @@ public class DataExtractor {
 
     public List<City> getCityDataFromFile(String file, Country country) {
         List<City> cityList = new ArrayList<>();
-        List<List<String>> loadedData = csvHandler.loadCsv(file);
+        List<List<String>> loadedData = fileHandler.loadCsv(file);
 
         for (List<String> line : loadedData) {
             String cityName = line.getFirst();
@@ -53,7 +53,7 @@ public class DataExtractor {
 
     public List<Trip> getTripDataFromFile(String file) {
         List<Trip> tripList = new ArrayList<>();
-        List<List<String>> loadedData = csvHandler.loadCsv(file);
+        List<List<String>> loadedData = fileHandler.loadCsv(file);
 
         for (List<String> line : loadedData) {
             String cityName = line.getFirst();

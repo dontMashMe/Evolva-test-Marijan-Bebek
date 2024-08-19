@@ -1,5 +1,6 @@
 package com.example.evolvatestmarijanbebek.services.fileHandling;
 
+import com.example.evolvatestmarijanbebek.utils.PathConstants;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 
@@ -11,10 +12,17 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class CSVHandler {
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+
+public class FileHandler {
     private final String path;
 
-    public CSVHandler(String uploadPath) {
+    public FileHandler(String uploadPath) {
         this.path = uploadPath;
     }
 
@@ -61,5 +69,14 @@ public class CSVHandler {
                 Stream.of(files)
                         .map(File::getName)
                         .collect(Collectors.toSet());
+    }
+
+    public static void copyFileToUploadDir(File file) {
+        try {
+            Path destination = Paths.get(PathConstants.UploadDir.label, file.getName());
+            Files.copy(file.toPath(), destination);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
