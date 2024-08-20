@@ -65,10 +65,14 @@ public class FileHandler {
      */
     public Set<String> getAllFilesInUploadDir() {
         File[] files = new File(this.path).listFiles();
-        return files == null ? Collections.emptySet() :
-                Stream.of(files)
-                        .map(File::getName)
-                        .collect(Collectors.toSet());
+        if (files == null) return Collections.emptySet();
+
+        Set<String> fileNames = new HashSet<>();
+        for (File file: files) {
+            if(file.getName().contains("csv"))
+                fileNames.add(file.getName());
+        }
+        return fileNames;
     }
 
     public static void copyFileToUploadDir(File file) {

@@ -49,6 +49,8 @@ public class FileHandlerTest {
                 Arrays.asList("Berlin", "EUR", "10"),
                 Arrays.asList("Muenchen", "EUR", "20")
         );
+
+        assertEquals(expected, result);
     }
 
 }
