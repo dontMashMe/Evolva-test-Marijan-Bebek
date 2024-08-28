@@ -4,6 +4,7 @@ public enum PathConstants {
     /*Application paths*/
     DBProperties("src/main/resources/com/example/evolvatestmarijanbebek/db.properties"),
     UploadDir("uploads"),
+    HTMLReportsPath(UploadDir.label + "/" + "reports/"),
 
 
     /*Test paths*/

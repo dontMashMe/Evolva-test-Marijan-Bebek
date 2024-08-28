@@ -10,7 +10,6 @@ import com.example.evolvatestmarijanbebek.services.fileHandling.DataExtractor;
 import com.example.evolvatestmarijanbebek.services.database.DataLoader;
 import com.example.evolvatestmarijanbebek.services.database.DatabaseConnectionProvider;
 import com.example.evolvatestmarijanbebek.utils.PathConstants;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -20,6 +19,7 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -127,17 +127,24 @@ public class SantaTripsController {
         // Generate reports for Trips from recent data.
         StringBuilder recentTripsReport = new StringBuilder();
         for (Country country : foundCountries) {
-            recentTripsReport.append(reportCreator.generateNewTripsReport(lastTripId, country));
+            recentTripsReport.append(reportCreator.generateNewTripsReportString(lastTripId, country));
         }
-        recentTripsArea.setText(recentTripsReport.toString());
-
-        // Generate reports for all trip data available.
-        totalTripsArea.setText(reportCreator.generateTotalTripsReport());
 
         if (foundCountries.isEmpty()) {
-            statusText.setText("Upload directory is empty!");
+            statusText.setText("Upload directory does not contain trip files!");
+            recentTripsArea.setText("");
         } else {
             statusText.setText("Report generated successfully!");
+
+            // Generate reports for Trips from recent data.
+            recentTripsArea.setText(recentTripsReport.toString());
+
+            // Generate reports for all trip data available.
+            totalTripsArea.setText(reportCreator.generateTotalTripsReport());
+
+            // Generate HTML report
+            String generatedHTMLReport = reportCreator.generateNewTripsReportHTML(lastTripId, foundCountries);
+            FileHandler.createReportFile(generatedHTMLReport);
         }
 
     }
@@ -147,6 +154,7 @@ public class SantaTripsController {
         File f = new File(uploadDir.getText());
         if (f.exists() && f.isDirectory()) {
             PathConstants.UploadDir.label = uploadDir.getText();
+            PathConstants.HTMLReportsPath.label = "%s/reports/".formatted(uploadDir.getText());
             statusText.setText("Changed upload directory to '%s'.".formatted(uploadDir.getText()));
         } else {
             statusText.setText("Provided directory does not exist.");

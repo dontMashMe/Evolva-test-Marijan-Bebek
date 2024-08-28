@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -86,27 +88,36 @@ public class ReportCreatorTest {
     }
 
     @Test
-    public void testGenerateNewTripsReport() throws SQLException {
+    public void testGenerateNewTripsReportString() throws SQLException {
         long lastTripId = 2L;
         Country country = new Country(1L, "Germany");
 
 
-        System.out.println(reportCreator.generateNewTripsReport(lastTripId, country));
+        System.out.println(reportCreator.generateNewTripsReportString(lastTripId, country));
+    }
+
+    @Test
+    public void testGenerateNewTripsReportHTML() throws SQLException {
+        List<Country> countryList = new ArrayList<>();
+        countryList.add(new Country(1L, "Germany"));
+        countryList.add(new Country(2L, "United States"));
+
+        System.out.println(reportCreator.generateNewTripsReportHTML(0, countryList));
     }
 
     @Test
     public void testGenerateAllTripsReport() throws SQLException {
         String expected = """
-               "united states.csv" found
-                    Totals by currencies:
-                        USD: 1000
-               "germany.csv" found
-                    Totals by currencies:
-                        EUR: 7000
-               "united kingdom.csv" found
-                    Totals by currencies:
-                        GBP: 3000
-                """;
+                "united states.csv" found
+                     Totals by currencies:
+                         USD: 1000
+                "germany.csv" found
+                     Totals by currencies:
+                         EUR: 7000
+                "united kingdom.csv" found
+                     Totals by currencies:
+                         GBP: 3000
+                \s""";
 
         assertEquals(reportCreator.generateTotalTripsReport(), expected);
     }

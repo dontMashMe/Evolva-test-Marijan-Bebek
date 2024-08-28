@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +21,7 @@ public class ReportCreator {
         this.connection = connection;
     }
 
-    public String generateNewTripsReport(long lastTripId, Country country) throws SQLException {
+    private Map<String, Integer> getNewReportDataForCountry(long lastTripId, Country country) throws SQLException {
         String query = """
                 SELECT curr.CurrencyName, SUM(t.SavedAmount) AS TotalSaved \
                 FROM Trip t \
@@ -45,7 +46,7 @@ public class ReportCreator {
             );
         }
 
-        return new TripDataReport(country.getCountryName(), reportData).getFormattedReport();
+        return reportData;
     }
 
     public String generateTotalTripsReport() throws SQLException {
@@ -54,15 +55,15 @@ public class ReportCreator {
 
         for (Country country : allCountriesList) {
             String query = """
-                SELECT curr.CurrencyName, SUM(t.SavedAmount) AS TotalSaved
-                FROM Trip t \
-                INNER JOIN Currency curr ON t.CurrencyID = curr.ID \
-                INNER JOIN City ci ON t.CityID = ci.ID \
-                INNER JOIN Country cun ON ci.CountryID = cun.ID \
-                WHERE cun.CountryName = ? \
-                GROUP BY curr.CurrencyName \
-                ORDER BY TotalSaved;
-                """;
+                    SELECT curr.CurrencyName, SUM(t.SavedAmount) AS TotalSaved
+                    FROM Trip t \
+                    INNER JOIN Currency curr ON t.CurrencyID = curr.ID \
+                    INNER JOIN City ci ON t.CityID = ci.ID \
+                    INNER JOIN Country cun ON ci.CountryID = cun.ID \
+                    WHERE cun.CountryName = ? \
+                    GROUP BY curr.CurrencyName \
+                    ORDER BY TotalSaved;
+                    """;
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, country.getCountryName());
@@ -81,4 +82,23 @@ public class ReportCreator {
 
         return report.toString();
     }
+
+    public String generateNewTripsReportString(long lastTripId, Country country) throws SQLException {
+        return new TripDataReport(
+                country.getCountryName(), getNewReportDataForCountry(lastTripId, country)
+        ).getFormattedReport();
+    }
+
+    public String generateNewTripsReportHTML(long lastTripId, List<Country> countries) throws SQLException {
+        List<Map<String, Integer>> multipleReportData = new ArrayList<>();
+        List<String> countryNames = new ArrayList<>();
+
+        for (Country country : countries) {
+            countryNames.add(country.getCountryName());
+            multipleReportData.add(getNewReportDataForCountry(lastTripId, country));
+        }
+
+        return new TripDataReport(countryNames, multipleReportData).getHTMLReport();
+    }
+
 }

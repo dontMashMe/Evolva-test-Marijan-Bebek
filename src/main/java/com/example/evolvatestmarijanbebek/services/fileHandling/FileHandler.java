@@ -8,9 +8,11 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -68,8 +70,8 @@ public class FileHandler {
         if (files == null) return Collections.emptySet();
 
         Set<String> fileNames = new HashSet<>();
-        for (File file: files) {
-            if(file.getName().contains("csv"))
+        for (File file : files) {
+            if (file.getName().contains("csv"))
                 fileNames.add(file.getName());
         }
         return fileNames;
@@ -80,6 +82,24 @@ public class FileHandler {
             Path destination = Paths.get(PathConstants.UploadDir.label, file.getName());
             Files.copy(file.toPath(), destination);
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void createReportFile(String content) {
+        try {
+            Path targetDir = Paths.get(PathConstants.HTMLReportsPath.label);
+            if (Files.notExists(targetDir)) {
+                Files.createDirectories(targetDir);
+            }
+
+            String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
+
+            Path reportFile = targetDir.resolve("report%s.html".formatted(timestamp));
+
+            Files.write(reportFile, content.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

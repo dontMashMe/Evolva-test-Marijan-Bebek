@@ -7,4 +7,6 @@ package com.example.evolvatestmarijanbebek.models.reports;
 * */
 public interface Report {
     String getFormattedReport();
+
+    String getHTMLReport();
 }
