@@ -1,5 +1,14 @@
 package com.example.evolvatestmarijanbebek.models.reports;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
@@ -34,24 +43,45 @@ public class TripDataReport implements Report {
     }
 
     @Override
-    public String getHTMLReport() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("<html>\n<head><title>").append(countryName).append(" Report</title></head>\n<body>\n");
+    public String getHTMLReport() throws IOException {
+        Path templatePath = Path.of("src/main/resources/com/example/evolvatestmarijanbebek/report_template.html");
+        Document doc = Jsoup.parse(Files.readString(templatePath));
+
+        Element tableBody = doc.getElementById("table-body");
+        assert tableBody != null;
 
         for (int i = 0; i < countries.size(); i++) {
             String country = countries.get(i);
-            Map<String, Integer> data = multipleReportData.get(i);
 
-            sb.append("<h1>").append(country).append(" Report</h1>\n");
-            sb.append("<h2>Totals by Currencies</h2>\n");
-            sb.append("<ul>\n");
-            for (Map.Entry<String, Integer> entry : data.entrySet()) {
-                sb.append("    <li>").append(entry.getKey()).append(": ").append(entry.getValue()).append("</li>\n");
+            Map<String, Integer> currencyData = multipleReportData.get(i);
+            int countryRowCounter = 0;
+            for (Map.Entry<String, Integer> entry : currencyData.entrySet()) {
+                String row;
+                if (countryRowCounter == 0) {
+                    row = String.format(
+                            "<tr><td class='coun'>%s</td><td>%s</td><td>%d</td></tr>",
+                            country, entry.getKey(), entry.getValue()
+                    );
+                } else {
+                    row = String.format(
+                            "<tr><td class='coun coun-empty'>%s</td><td>%s</td><td>%d</td></tr>",
+                            "", entry.getKey(), entry.getValue() // append empty country name
+                    );
+                }
+                countryRowCounter++;
+                tableBody.append(row);
             }
-            sb.append("</ul>\n");
+
         }
 
-        sb.append("</body>\n</html>");
-        return sb.toString();
+        String formattedDateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm"));
+        Element reportTime = doc.getElementById("report-date");
+        assert reportTime != null;
+
+        reportTime.text("Report for %s".formatted(formattedDateTime));
+
+        return doc.outerHtml();
     }
+
+
 }

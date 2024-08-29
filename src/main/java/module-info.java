@@ -5,6 +5,7 @@ module com.example.evolvatestmarijanbebek {
     requires org.kordamp.bootstrapfx.core;
     requires java.sql;
     requires com.opencsv;
+    requires org.jsoup;
 
     opens com.example.evolvatestmarijanbebek to javafx.fxml;
 

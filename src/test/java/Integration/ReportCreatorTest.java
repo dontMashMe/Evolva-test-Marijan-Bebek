@@ -97,7 +97,7 @@ public class ReportCreatorTest {
     }
 
     @Test
-    public void testGenerateNewTripsReportHTML() throws SQLException {
+    public void testGenerateNewTripsReportHTML() throws SQLException, IOException {
         List<Country> countryList = new ArrayList<>();
         countryList.add(new Country(1L, "Germany"));
         countryList.add(new Country(2L, "United States"));
@@ -117,7 +117,7 @@ public class ReportCreatorTest {
                 "united kingdom.csv" found
                      Totals by currencies:
                          GBP: 3000
-                \s""";
+                """;
 
         assertEquals(reportCreator.generateTotalTripsReport(), expected);
     }

@@ -4,6 +4,7 @@ import com.example.evolvatestmarijanbebek.models.DAO.CountryDao;
 import com.example.evolvatestmarijanbebek.models.mappings.Country;
 import com.example.evolvatestmarijanbebek.models.reports.TripDataReport;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -89,7 +90,7 @@ public class ReportCreator {
         ).getFormattedReport();
     }
 
-    public String generateNewTripsReportHTML(long lastTripId, List<Country> countries) throws SQLException {
+    public String generateNewTripsReportHTML(long lastTripId, List<Country> countries) throws SQLException, IOException {
         List<Map<String, Integer>> multipleReportData = new ArrayList<>();
         List<String> countryNames = new ArrayList<>();
 

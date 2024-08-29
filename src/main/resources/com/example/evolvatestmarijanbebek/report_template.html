@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trip Report</title>
+    <style>
+        body {
+            font-size: 1em;
+            font-family: Arial, Helvetica, sans-serif;
+            padding: 1%;
+            color: #FFF;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            padding: 0.5em;
+            color: #000;
+        }
+
+        table {
+            margin: 18px 0 28px 0;
+            width: 100%;
+        }
+
+        table tr {
+            padding: 0.3em;
+        }
+
+        table, th, td {
+          border: 1px solid white;
+          border-collapse: collapse;
+        }
+
+        td {
+          background-color: #415E4C;
+        }
+
+        thead tr {
+            background-color: #002f12;
+            color: #FFF;
+            text-align: left;
+            font-weight: bold;
+            position: sticky;
+            top: 0;
+        }
+
+        tbody tr {
+            background-color: #555;
+        }
+
+        tbody tr .coun {
+            font-weight: bold;
+            font-size: 1.2em;
+            border-bottom: none;
+        }
+
+        tbody tr .coun-empty {
+            border: none;
+        }
+
+        th, td {
+            padding: 1% 1.5%;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <h2 id="report-date"></h2>
+</div>
+
+<table id="table">
+    <thead id="table-header">
+    <tr id="header-row">
+        <th>COUNTRY</th>
+        <th>CURRENCY</th>
+        <th>TOTAL</th>
+    </tr>
+    </thead>
+    <tbody id="table-body">
+
+    </tbody>
+</table>
+
+</body>
+</html>

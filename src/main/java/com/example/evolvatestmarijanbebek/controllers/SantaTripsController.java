@@ -92,7 +92,7 @@ public class SantaTripsController {
     }
 
     @FXML
-    protected void onHelloButtonClick() throws SQLException {
+    protected void onHelloButtonClick() throws SQLException, IOException {
         DataExtractor dataExtractor = new DataExtractor(PathConstants.UploadDir.label);
 
 
