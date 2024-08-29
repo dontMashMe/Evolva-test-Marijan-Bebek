@@ -9,10 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ReportCreator {
 
@@ -100,6 +97,42 @@ public class ReportCreator {
         }
 
         return new TripDataReport(countryNames, multipleReportData).getHTMLReport();
+    }
+
+    public String generateTotalTripsReportHTML() throws SQLException, IOException {
+        List<String> allCountriesList = new CountryDao(connection).getAll().stream()
+                .map(Country::getCountryName)
+                .toList();
+
+        List<Map<String, Integer>> allReportData = new ArrayList<>();
+
+        for (String countryName : allCountriesList) {
+            String query = """
+                    SELECT curr.CurrencyName, SUM(t.SavedAmount) AS TotalSaved
+                    FROM Trip t \
+                    INNER JOIN Currency curr ON t.CurrencyID = curr.ID \
+                    INNER JOIN City ci ON t.CityID = ci.ID \
+                    INNER JOIN Country cun ON ci.CountryID = cun.ID \
+                    WHERE cun.CountryName = ? \
+                    GROUP BY curr.CurrencyName \
+                    ORDER BY TotalSaved;
+                    """;
+
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, countryName);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            Map<String, Integer> reportData = new HashMap<>();
+            while (resultSet.next()) {
+                reportData.put(
+                        resultSet.getString("CurrencyName"),
+                        resultSet.getInt("TotalSaved")
+                );
+            }
+            allReportData.add(reportData);
+        }
+
+        return new TripDataReport(allCountriesList, allReportData).getHTMLReport();
     }
 
 }

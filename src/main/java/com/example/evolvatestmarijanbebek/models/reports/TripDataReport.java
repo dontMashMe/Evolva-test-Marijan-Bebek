@@ -52,26 +52,13 @@ public class TripDataReport implements Report {
 
         for (int i = 0; i < countries.size(); i++) {
             String country = countries.get(i);
-
             Map<String, Integer> currencyData = multipleReportData.get(i);
+
             int countryRowCounter = 0;
             for (Map.Entry<String, Integer> entry : currencyData.entrySet()) {
-                String row;
-                if (countryRowCounter == 0) {
-                    row = String.format(
-                            "<tr><td class='coun'>%s</td><td>%s</td><td>%d</td></tr>",
-                            country, entry.getKey(), entry.getValue()
-                    );
-                } else {
-                    row = String.format(
-                            "<tr><td class='coun coun-empty'>%s</td><td>%s</td><td>%d</td></tr>",
-                            "", entry.getKey(), entry.getValue() // append empty country name
-                    );
-                }
+                tableBody.append(getTableRow(entry, countryRowCounter, country));
                 countryRowCounter++;
-                tableBody.append(row);
             }
-
         }
 
         String formattedDateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm"));
@@ -83,5 +70,27 @@ public class TripDataReport implements Report {
         return doc.outerHtml();
     }
 
-
+    private String getTableRow(Map.Entry<String, Integer> entry, int countryRowCounter, String country) {
+        if (countryRowCounter == 0) {
+            return String.format(
+                    """
+                            <tr>
+                                <td class='coun'>%s</td>
+                                <td>%s</td>
+                                <td>%d</td>
+                            </tr>""",
+                    country, entry.getKey(), entry.getValue()
+            );
+        } else {
+            return String.format(
+                    """
+                            <tr>
+                                <td class='coun coun-empty'>%s</td>
+                                <td>%s</td>
+                                <td>%d</td>
+                            </tr>""",
+                    "", entry.getKey(), entry.getValue()
+            );
+        }
+    }
 }

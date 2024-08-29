@@ -92,7 +92,7 @@ public class SantaTripsController {
     }
 
     @FXML
-    protected void onHelloButtonClick() throws SQLException, IOException {
+    protected void onCheckForTripFiles() throws SQLException, IOException {
         DataExtractor dataExtractor = new DataExtractor(PathConstants.UploadDir.label);
 
 
@@ -144,7 +144,7 @@ public class SantaTripsController {
 
             // Generate HTML report
             String generatedHTMLReport = reportCreator.generateNewTripsReportHTML(lastTripId, foundCountries);
-            FileHandler.createReportFile(generatedHTMLReport);
+            FileHandler.createReportFile(generatedHTMLReport, "report");
         }
 
     }
@@ -160,5 +160,12 @@ public class SantaTripsController {
             statusText.setText("Provided directory does not exist.");
         }
 
+    }
+
+    public void allTripDataReport() throws SQLException, IOException {
+        // Generate HTML report
+        String generatedHTMLReport = reportCreator.generateTotalTripsReportHTML();
+        FileHandler.createReportFile(generatedHTMLReport, "reportAll");
+        statusText.setText("All trip data report generated successfully.");
     }
 }

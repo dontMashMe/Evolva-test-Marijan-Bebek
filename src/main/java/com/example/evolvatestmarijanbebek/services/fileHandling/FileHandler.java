@@ -86,7 +86,7 @@ public class FileHandler {
         }
     }
 
-    public static void createReportFile(String content) {
+    public static void createReportFile(String content, String fileName) {
         try {
             Path targetDir = Paths.get(PathConstants.HTMLReportsPath.label);
             if (Files.notExists(targetDir)) {
@@ -95,7 +95,7 @@ public class FileHandler {
 
             String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
 
-            Path reportFile = targetDir.resolve("report%s.html".formatted(timestamp));
+            Path reportFile = targetDir.resolve("%s%s.html".formatted(fileName, timestamp));
 
             Files.write(reportFile, content.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
 
